@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setAuthCode, fetchUser } from "../actions";
 import auth from "../util/auth";
 
-export default class LoginCallback extends Component {
+class LoginCallback extends Component {
   constructor(props) {
     super(props);
 
@@ -9,6 +11,8 @@ export default class LoginCallback extends Component {
 
     if (props && props.location && props.location.search) {
       this.code = auth.getCodeFromQueryString(props.location.search);
+      props.dispatch(setAuthCode(this.code));
+      props.dispatch(fetchUser());
     }
   }
 
@@ -21,3 +25,5 @@ export default class LoginCallback extends Component {
     )
   }
 }
+
+export default connect()(LoginCallback);
