@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 class Header extends Component {
@@ -9,13 +9,24 @@ class Header extends Component {
             <div>
                 <header className="Header-header">
                   <h1 className="Header-title">Welcome to the Hackathon Template!</h1>
-                  <p>Logged in as: {this.props.user.name}</p>
+
+                  <div className="Header-row">
+                    <p>Logged in as: {this.props.user.name}</p>
+
+                    <ul className="Header-nav">
+                      <li>
+                        <NavLink exact to="/" activeClassName="Header-selected">Home</NavLink>
+                      </li>
+                      <li>
+                        <NavLink exact to="/user" activeClassName="Header-selected">User</NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/callback?code=test_code" activeClassName="Header-selected">Login (test)</NavLink>
+                      </li>
+                    </ul>
+                  </div>
                 </header>
 
-                <p>
-                  <Link to="/">Home</Link>
-                  <Link to="/callback?code=test_code">Login</Link>
-                </p>
             </div>
         )
     }
@@ -27,4 +38,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+// `pure: false` tells react not to treat it as a pure function
+export default connect(mapStateToProps, null, null, { pure: false })(Header);

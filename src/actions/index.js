@@ -1,22 +1,31 @@
+import auth from "../util/auth";
+
 export const setAuthCode = code => {
   return {
     type: "SET_AUTH_CODE",
     code
-  }
+  };
 };
 
-export const setUser = user => {
+export const loginUser = user => {
   return {
-    type: "SET_USER",
+    type: "LOGIN_USER",
     user
-  }
+  };
 };
 
+export const logoutUser = () => {
+  return {
+    type: "LOGOUT_USER"
+  };
+};
+
+/**
+ * Fetch the user from the API then update the store
+ */
 export function fetchUser() {
   return function(dispatch) {
-    const num = Math.floor((Math.random() * 10) + 1);
-    return fetch(`https://jsonplaceholder.typicode.com/users/${num}`)
-      .then(resp => resp.json(), err => console.log(err))
-      .then(json => dispatch(setUser(json)));
-  }
+    auth.getUser()
+      .then(json => dispatch(loginUser(json)));
+  };
 }

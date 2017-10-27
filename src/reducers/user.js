@@ -8,8 +8,11 @@ const user = (state = defaultState, action) => {
     case "SET_AUTH_CODE":
       return Object.assign({}, state, { code: action.code });
 
-    case "SET_USER":
+    case "LOGIN_USER":
       return Object.assign({}, state, { user: action.user });
+
+    case "LOGOUT_USER":
+      return Object.assign({}, state, { user: {} });
 
     default:
       return state;
